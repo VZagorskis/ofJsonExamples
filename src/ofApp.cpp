@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	ofFile jsonFile("settings.json"); // atidaromas failas
-	jsonFile.setWriteable(true);
+	ofFile jsonFile;
+	jsonFile.open("settings.json" , ofFile::ReadWrite); // atidaromas failas
 	if (!jsonFile.exists()) // jei failas neegzistuoja sukuriamas
 	{
 		jsonFile.create();
@@ -12,7 +12,7 @@ void ofApp::setup() {
 	}
 
 	jsonFile >> json; // stream'as perkeliamas i json objekta
-
+	jsonFile.clear();
 
 	// Nuskaito reiksmes json'e
 	for (auto& item : json.items()) // nuskaitomas json pirmas objektu lygis 
@@ -58,10 +58,7 @@ void ofApp::setup() {
 	}
 
 	// issaugo json faila
-
-	jsonFile.write(json.dump().c_str() , json.dump().size());
-	cout << json.dump() << endl;
-	//jsonFile.write(json.)
+	jsonFile << json.dump();
 }
 
 //--------------------------------------------------------------
